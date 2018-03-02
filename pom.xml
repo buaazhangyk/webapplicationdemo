@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>zhangyk</groupId>
+  <artifactId>firstdemo</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>firstdemo Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <spring.version>4.3.5.RELEASE</spring.version>
+    <jetty.version>9.2.6.v20141205</jetty.version>
+    <slf4j.version>1.7.22</slf4j.version>
+    <log4j2.version>2.7</log4j2.version>
+    <junit.version>4.12</junit.version>
+    <aspectj.version>1.8.10</aspectj.version>
+    <jdk.version>1.8</jdk.version>
+    <guava.version>20.0</guava.version>
+    <mysql-connector.version>5.1.40</mysql-connector.version>
+    <mybatis.version>3.4.1</mybatis.version>
+    <mybatis-spring.version>1.3.0</mybatis-spring.version>
+    <zookeeper.version>3.4.9</zookeeper.version>
+    <fastjson.version>1.2.23</fastjson.version>
+    <thrift.version>0.9.3</thrift.version>
+    <hibernate.validator.version>5.3.4.Final</hibernate.validator.version>
+    <squirrel-client.version>2.1.5</squirrel-client.version>
+    <!-- Plugin的属性定义 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!--spring start -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <!--spring end -->
+    <!--jetty start -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-annotations</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jetty.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>javax.servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jsp</artifactId>
+      <version>9.2.15.v20160210</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>javax.servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--jetty end -->
+    <!--tomcat start -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>8.5.12</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>tomcat-servlet-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--tomcat end -->
+    <!-- netty -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.1.12.Final</version>
+    </dependency>
+
+    <!-- fastjson -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>firstdemo</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <path>/</path>
+          <!--<serverXml>src/main/resources/tomcat/server.xml</serverXml>-->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

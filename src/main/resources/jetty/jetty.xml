@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+    <Get class="java.lang.System" name="out">
+        <Call name="println">
+            <Arg>Redirecting stderr/stdout to <Ref id="ServerLogName"/></Arg>
+        </Call>
+    </Get>
+
+    <Get name="ThreadPool">
+        <Set name="minThreads" type="int">20</Set>
+        <Set name="maxThreads" type="int">200</Set>
+        <Set name="name">jetty-worker</Set>
+    </Get>
+
+    <Set name="connectors">
+        <Array type="org.eclipse.jetty.server.Connector">
+            <Item>
+                <New class="org.eclipse.jetty.server.ServerConnector">
+                    <Arg><Ref refid="Server"/></Arg>
+                    <Set name="port">8080</Set>
+                    <Set name="host"><!--<SystemProperty name="jetty.host"/>--></Set>
+                </New>
+            </Item>
+        </Array>
+    </Set>
+
+    <Array id="plusConfig" type="java.lang.String">
+        <Item>org.eclipse.jetty.webapp.WebInfConfiguration</Item>
+        <Item>org.eclipse.jetty.webapp.WebXmlConfiguration</Item>
+        <Item>org.eclipse.jetty.webapp.MetaInfConfiguration</Item>
+        <Item>org.eclipse.jetty.webapp.FragmentConfiguration</Item>
+        <Item>org.eclipse.jetty.plus.webapp.EnvConfiguration</Item>
+        <Item>org.eclipse.jetty.plus.webapp.PlusConfiguration</Item>
+        <Item>org.eclipse.jetty.annotations.AnnotationConfiguration</Item>
+        <Item>org.eclipse.jetty.webapp.JettyWebXmlConfiguration</Item>
+    </Array>
+
+    <Set name="handler">
+        <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
+            <Set name="handlers">
+                <Array type="org.eclipse.jetty.server.Handler">
+                    <Item>
+                        <New class="org.eclipse.jetty.webapp.WebAppContext">
+                            <Set name="resourceBase">src/main/webapp</Set>
+                            <Set name="contextPath">/</Set>
+                            <Set name="parentLoaderPriority">true</Set>
+                            <Set name="descriptor">src/main/webapp/WEB-INF/web.xml</Set>
+                            <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
+                        </New>
+                    </Item>
+                    <Item>
+                        <New class="org.eclipse.jetty.server.handler.RequestLogHandler">
+                            <Set name="requestLog">
+                                <New id="RequestLogImpl" class="org.eclipse.jetty.server.NCSARequestLog">
+                                    <Set name="filename">./logs/jetty.request.log.yyyy_mm_dd</Set>
+                                    <Set name="filenameDateFormat">yyyy-MM-dd</Set>
+                                    <Set name="retainDays">90</Set>
+                                    <Set name="append">true</Set>
+                                    <Set name="extended">false</Set>
+                                    <Set name="logCookies">false</Set>
+                                    <Set name="LogTimeZone">GMT+8</Set>
+                                    <Set name="logLatency">true</Set>
+                                    <Set name="preferProxiedForAddress">true</Set>
+                                </New>
+                            </Set>
+                        </New>
+                    </Item>
+                </Array>
+            </Set>
+        </New>
+    </Set>
+
+    <Set name="stopAtShutdown">true</Set>
+    <Set name="stopTimeout">1000</Set>
+    <!--如果打开了会打非常恐怖的日志,导致启动日志没法看了-->
+    <Set name="dumpAfterStart">false</Set>
+    <Set name="dumpBeforeStop">false</Set>
+</Configure>
